@@ -7,15 +7,33 @@
             <div class="row" style="margin-top: 15px;">
                 <div class="col-md-6">
                     <form>
-                        <div class="form-group"><label>Nos visita :&nbsp; {{users.visit}}</label><input class="form-control" type="text" v-model="users.visit"></div>
                         <div class="form-group">
-                            <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-top: 5px;"><label class="btn btn-secondary active">Solo<input type="radio" name="options" checked=""></label><label class="btn btn-secondary">Acompañado<input type="radio" name="options" checked=""></label></div><i class="fa fa-clock-o float-right"
-                                style="font-size: 29px;margin-top: 9px;"></i></div>
-                    </form><label>Anfitrion : {{users.host}}</label>
+                          <label>Nos visita :&nbsp; {{users.visit}}</label>
+                          <input class="form-control" type="text" v-model="users.visit" @keyup="search" >
+                        </div>
+                        <div class="form-group">
+                            <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-top: 5px;">
+                              <label class="btn btn-secondary active">Solo<input type="radio" name="options" checked="" @click="changeAlone">
+                              </label><label class="btn btn-secondary">Acompañado<input type="radio" name="options" checked="" @click="changeWhit">
+                              </label>
+                            </div>
+                            <i class="fa fa-clock-o float-right" v-bind:class="[ui.isActive ? ui.active :  ui.inactive]" style="font-size: 2em" @click="showClock"></i>
+                        </div>
+                    </form>
+                    <label>Anfitrion : {{users.host}}</label>
                     <div class="form-group">
                         <div class="input-group">
-                            <div class="input-group-prepend"><span class="input-group-text"><i class="fa fa-user"></i></span></div><input class="form-control" type="text" v-model="users.host">
-                            <div class="input-group-append"><button class="btn btn-primary" type="button"><i class="typcn typcn-tick"></i></button></div>
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">
+                                <i class="fa fa-user"></i>
+                              </span>
+                            </div>
+                            <input class="form-control" type="text" v-model="users.host">
+                            <div class="input-group-append">
+                              <button class="btn btn-primary" type="button">
+                                <i class="typcn typcn-tick"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -33,24 +51,27 @@
                   <div id="date" v-show="logic.pageStep == 2">
                     <form>
                       <div class="form-group">
-                        <input type="date" class="form-control" style="margin-top: 30px;" >
+                        <input type="date" class="form-control" style="margin-top: 30px;"  @change="watchContent" v-model="date.day">
                       </div>
-                      <div class="form-group">
-                        <input type="time" class="form-control" name="hora" value="11:45" max="22:30" min="10:00" step="1">
-                      </div>
+                        <div class="input-group clock">
+                          <input type="text" class="form-control" value="" placeholder="Ahora">
+                              <span class="input-group-addon">
+                              <span class="glyphicon glyphicon-time"></span>
+                              </span>
+                        </div>
                     </form>
                   </div>
                   
-                  <search v-for="i in users.visit" :key="i" />
+                  <querys v-show="logic.pageStep == 3" v-bind:name="users.visits"/>
                 </div>
-
             </div>
       </div>
   </div>
 </template>
 
 <script>
-import search from './components/querys'
+import querys from './components/querys'
+import axios from 'axios'
 export default {
   name: 'App',
   data(){
@@ -58,18 +79,65 @@ export default {
       users:{
         visit:"",
         host:"",
-        visit:["edgar","jose","carlos"],
+        visits:{},
        },
 
       logic:{
-        pageStep:0,
-        x:3
+        pageStep:0
+      },
+      ui:{
+        isActive:false,
+        active:'active',
+        inactive:'inactive'
+      },
+      date:{
+        day:'',
+        time:''
       }
-     
     }
   },
   components:{
-    search
+    querys
+  },
+  methods:{
+    search(){
+      this.logic.pageStep = 3
+      if(this.users.visit == ''){
+       this.logic.pageStep = 0
+      } else{
+        axios.get(`http://localhost/vue-cli-pages/controllers/getContact.php?dato=${this.users.visit}`).then(response =>{
+          this.users.visits = response.data
+        }).catch(e=>{
+          alert(e)
+        });
+      }
+    },
+    changeAlone(){
+      this.logic.pageStep = 0
+    },
+    changeWhit(){
+      this.logic.pageStep = 1
+    },
+    showClock(){
+      this.logic.pageStep = 2
+    },
+    watchContent(){
+      if(this.date.day != '' && this.date.time != ''){
+        this.ui.isActive = true
+      }
+    }
+  },
+  computed:{
+    
   }
 }
 </script>
+
+<style scoped>
+  .active{
+      color: rgb(95, 211, 0)
+  }
+  .inactive{
+      color: rgb(0, 0, 0)
+  }
+</style>
