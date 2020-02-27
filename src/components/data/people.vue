@@ -23,7 +23,7 @@ export default {
     },
     methods:{
         selected(){
-            localStorage.selected = this.name
+           this.$store.commit('change',this.name)
         }
     }
 }

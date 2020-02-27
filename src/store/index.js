@@ -5,15 +5,20 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    count:0
+    visit:''
   },
   mutations: {
-    change (count){
-      state.count++
+    change (state,arg){
+      state.visit = arg
     }
   },
   actions: {
   },
   modules: {
+  },
+  getters:{
+    getVisit: state =>{
+       return state.visit
+    }
   }
 })

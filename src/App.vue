@@ -1,13 +1,13 @@
 <template>
   <div id="app">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typicons/2.0.9/typicons.min.css">
-      <div class="container">
+      <div class="container-fluid">
             <div class="row" style="margin-top: 15px;">
                 <div class="col-md-6">
                     <form>
                         <div class="form-group">
-                          <label>Nos visita :&nbsp; {{users.visit}}</label>
-                          <input class="form-control" type="text" v-model="users.visit" @keyup="search" >
+                          <label>Nos visita : {{ returnVisit }} </label>
+                          <input class="form-control" type="text" v-model="users.visit" @keyup="search" value="this.$store.getters.getVisit">
                         </div>
                         <div class="form-group">
                             <div class="btn-group btn-group-toggle" data-toggle="buttons" style="margin-top: 5px;">
@@ -138,9 +138,16 @@ export default {
       }
     },
     upData(){
-      
+      alert(`se subira ${this.users.visit}`)
+    }
+  },
+  computed:{
+    returnVisit (){
+      this.users.visit = this.$store.getters.getVisit;
+      return this.$store.getters.getVisit;
     }
   }
+  
 }
 </script>
 
