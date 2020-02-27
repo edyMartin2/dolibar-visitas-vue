@@ -1,10 +1,8 @@
 <template>
-    <div class="boxin" v-show="x">
+    <div class="" v-show="x" @click="selected">
            <div class="bg-light border rounded " style="width: 100%;min-width: 50px;margin: 0em;height: 2.5em;padding: 4px;margin-top: 30px;">
-               <i class="fa fa-vcard-o" style="margin-left: 6px;margin-top: 7px;"></i>
+               <i class="typcn typcn-briefcase" style="margin-left: 6px;margin-top: 7px; float:left"></i>
                 <span style="margin-left:1.5em">{{ name }}</span>
-               <input type="radio" class="float-right d-lg-flex justify-content-lg-center align-items-lg-center" style="margin-top: 7px;margin-right: 7px;width: 13;height: 13;" name="grupoUno" />
-           
            </div>
     </div>
 </template>
@@ -21,6 +19,11 @@ export default {
             } else{
                 return false
             }
+        }
+    },
+    methods:{
+        selected(){
+            localStorage.selected = this.name
         }
     }
 }

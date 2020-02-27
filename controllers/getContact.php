@@ -2,9 +2,9 @@
 require 'connection.php';
 
 $nombre=$_GET['dato'];
-$nombres = '';
 
-
+// $nombre="a";
+$nombres="";
 
 $conn=new Connection();
 $conn->createConnection();
@@ -18,13 +18,15 @@ $numRows=$result->num_rows;
 if ($numRows>0) {
 	while ($row=$result->fetch_assoc()) {
 		$nombres .= '{"nombre":"'.$row['fullName'].'"},';
+		// $nombres[]= ('nombre' => $row['fullName']);
 	}
 }else{
-	
+	echo "No hay datos";
 }
 
-echo '['.$nombres.'{}]';
-
+// print_r($nombres);
+// echo $nombres;
+echo ('['.$nombres.'{}]');
 $conn->closeConnection();
 
 

@@ -1,7 +1,5 @@
 <template>
   <div id="app">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/typicons/2.0.9/typicons.min.css">
       <div class="container">
             <div class="row" style="margin-top: 15px;">
@@ -17,7 +15,7 @@
                               </label><label class="btn btn-secondary">Acompañado<input type="radio" name="options" checked="" @click="changeWhit">
                               </label>
                             </div>
-                            <i class="fa fa-clock-o float-right" v-bind:class="[ui.isActive ? ui.active :  ui.inactive]" style="font-size: 2em" @click="showClock"></i>
+                            <i class="typcn typcn-time float-right" v-bind:class="[ui.isActive ? ui.active :  ui.inactive]" style="font-size: 2em" @click="showClock"></i>
                         </div>
                     </form>
                     <label>Anfitrion : {{users.host}}</label>
@@ -25,12 +23,12 @@
                         <div class="input-group">
                             <div class="input-group-prepend">
                               <span class="input-group-text">
-                                <i class="fa fa-user"></i>
+                                <i class="typcn typcn-user"></i>
                               </span>
                             </div>
-                            <input class="form-control" type="text" v-model="users.host">
+                            <input class="form-control" type="text" v-model="users.host" @keyup="seachHost">
                             <div class="input-group-append">
-                              <button class="btn btn-primary" type="button">
+                              <button class="btn btn-primary" type="button" @click="upData">
                                 <i class="typcn typcn-tick"></i>
                                 </button>
                             </div>
@@ -53,12 +51,13 @@
                       <div class="form-group">
                         <input type="date" class="form-control" style="margin-top: 30px;"  @change="watchContent" v-model="date.day">
                       </div>
-                        <div class="input-group clock">
-                          <input type="text" class="form-control" value="" placeholder="Ahora">
-                              <span class="input-group-addon">
-                              <span class="glyphicon glyphicon-time"></span>
-                              </span>
-                        </div>
+                     <div class="input-group clockpicker">
+                      <input type="time" class="form-control" value="09:30">
+                        <span class="input-group-addon">
+                           <span class="glyphicon glyphicon-time"></span>
+                         </span>
+
+                      </div>
                     </form>
                   </div>
                   
@@ -105,7 +104,19 @@ export default {
       if(this.users.visit == ''){
        this.logic.pageStep = 0
       } else{
-        axios.get(`http://localhost/vue-cli-pages/controllers/getContact.php?dato=${this.users.visit}`).then(response =>{
+        axios.get(`http://localhost/controllers/getContact.php?dato=${this.users.visit}&tabla=1`).then(response =>{
+          this.users.visits = response.data
+        }).catch(e=>{
+          alert(e)
+        });
+      }
+    },
+    seachHost(){
+      this.logic.pageStep = 3
+      if(this.users.host == ''){
+       this.logic.pageStep = 0
+      } else{
+        axios.get(`http://localhost/controllers/getContact.php?dato=${this.users.host}&tabla=2`).then(response =>{
           this.users.visits = response.data
         }).catch(e=>{
           alert(e)
@@ -125,10 +136,10 @@ export default {
       if(this.date.day != '' && this.date.time != ''){
         this.ui.isActive = true
       }
+    },
+    upData(){
+      
     }
-  },
-  computed:{
-    
   }
 }
 </script>
