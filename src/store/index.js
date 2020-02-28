@@ -5,12 +5,17 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    visit:''
+    visit:'',
+    hoster:''
   },
   mutations: {
     change (state,arg){
-      state.visit = arg
+      state.visit = arg;
+    },
+    changeHoster(state, args){
+      state.hoster = args;
     }
+
   },
   actions: {
   },
