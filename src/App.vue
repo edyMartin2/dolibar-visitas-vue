@@ -82,7 +82,7 @@
             </form>
 
             <ul>
-              <li v-for="i in users.together" :key="i">{{i}}</li>
+              <li v-for="i in users.list" :key="i">{{i}}</li>
             </ul>
           </div>
 
@@ -97,7 +97,7 @@
                 />
               </div>
               <div class="input-group clockpicker">
-                <input type="time" class="form-control" value="09:30" />
+                <input type="time" class="form-control" value="09:30"  v-model="date.time"/>
                 <span class="input-group-addon">
                   <span class="glyphicon glyphicon-time"></span>
                 </span>
@@ -129,7 +129,8 @@ export default {
         host: "",
         visits: {},
         captionCompanion: "",
-        together: []
+        together: "",
+        list:[]
       },
 
       logic: {
@@ -199,29 +200,30 @@ export default {
     upData() {
       // upload cita
       if (
-        this.users.visit != "" &&
-        this.users.host != "" &&
+        this.$store.state.visit != "" &&
+        this.$store.state.host != "" &&
         this.date.day != "" &&
         this.date.time != ""
       ) {
-        // acompleta url
-        axios
-          .get(`${this.url}`)
-          .then(response => {
-            console.log(response.data);
-          })
-          .catch(e => {
-            alert(`error${e}`);
-          });
+        let question = confirm('Agendar la cita ?')
+        if(question == true){
+          let date = `${this.$store.state.visit} %26 ${this.date.day} %26 ${this.date.time} %26 ${this.users.together} %26 ${this.$store.state.hoster} %26 1 %26  %26${Date.now()} `;
+          axios.get(`${this.url}/insertar.php?date=${date}`).then(response=>{
+            alert(response.data);
+          }).catch(err=>console.log(err));
+        } else{
+          console.log('cita cancelada');
+        }
       } else {
-        alert("No hay datos para la cita");
+          console.log('Sin datos suficientes');
       }
     },
     addTogether() {
       if (this.users.captionCompanion == "") {
         //acciones a realizar si este dato se encuentra basio
       } else {
-        this.users.together.push(this.users.captionCompanion);
+        this.users.together = this.users.together.concat('-'+this.users.captionCompanion);
+        this.users.list.push(this.users.captionCompanion);
         this.users.captionCompanion = "";
       }
     }

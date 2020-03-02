@@ -6,7 +6,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     visit:'',
-    hoster:''
+    hoster:'',
+    together:''
   },
   mutations: {
     change (state,arg){
