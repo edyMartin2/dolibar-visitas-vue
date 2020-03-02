@@ -1,3 +1,4 @@
+// html de l pagina inicial
 <template>
   <div id="app">
     <link
@@ -25,20 +26,13 @@
                 data-toggle="buttons"
                 style="margin-top: 5px;"
               >
-                <label class="btn btn-secondary active"
-                  >Solo<input
-                    type="radio"
-                    name="options"
-                    checked=""
-                    @click="stepDefined(404)"
-                  /> </label
-                ><label class="btn btn-secondary"
-                  >Acompañado<input
-                    type="radio"
-                    name="options"
-                    checked=""
-                    @click="stepDefined(1)"
-                  />
+                <label class="btn btn-secondary active">
+                  Solo
+                  <input type="radio" name="options" checked @click="stepDefined(404)" />
+                </label>
+                <label class="btn btn-secondary">
+                  Acompañado
+                  <input type="radio" name="options" checked @click="stepDefined(1)" />
                 </label>
               </div>
               <i
@@ -78,16 +72,12 @@
           <div id="visit" v-show="logic.pageStep == 1">
             <form style="margin-top:2em;">
               <div class="input-group">
-                <input
-                  class="form-control"
-                  type="text"
-                  v-model="users.captionCompanion"
-                />
-                 <div class="input-group-append">
-                <button class="btn btn-success" type="button" @click="addTogether">
-                  <i class="typcn typcn-plus"></i>
-                </button>
-              </div>
+                <input class="form-control" type="text" v-model="users.captionCompanion" />
+                <div class="input-group-append">
+                  <button class="btn btn-success" type="button" @click="addTogether">
+                    <i class="typcn typcn-plus"></i>
+                  </button>
+                </div>
               </div>
             </form>
 
@@ -123,7 +113,7 @@
     </div>
   </div>
 </template>
-
+// scripts de la pagina inicial
 <script>
 import queryVisit from "./components/queryVisit";
 import hoster from "./components/queryHoster";
@@ -133,12 +123,13 @@ export default {
 
   data() {
     return {
+      url: "http://localhost/controllers",
       users: {
         visit: "",
         host: "",
         visits: {},
-        captionCompanion:'',
-        together:[]
+        captionCompanion: "",
+        together: []
       },
 
       logic: {
@@ -166,15 +157,13 @@ export default {
         this.logic.pageStep = 0;
       } else {
         axios
-          .get(
-            `http://localhost/controllers/getContact.php?dato=${this.users.visit}&tabla=1`
-          )
+          .get(`${this.url}/getContact.php?dato=${this.users.visit}&tabla=1`)
           .then(response => {
             console.log(response.data);
             this.users.visits = response.data;
           })
           .catch(e => {
-            alert(e);
+            console.log(e);
           });
       }
     },
@@ -190,11 +179,8 @@ export default {
         this.logic.pageStep = 0;
       } else {
         axios
-          .get(
-            `http://localhost/controllers/getContact.php?dato=${this.users.host}&tabla=2`
-          )
+          .get(`${this.url}/getContact.php?dato=${this.users.host}&tabla=2`)
           .then(response => {
-            console.log(response.data);
             this.users.visits = response.data;
           })
           .catch(e => {
@@ -212,13 +198,31 @@ export default {
     },
     upData() {
       // upload cita
+      if (
+        this.users.visit != "" &&
+        this.users.host != "" &&
+        this.date.day != "" &&
+        this.date.time != ""
+      ) {
+        // acompleta url
+        axios
+          .get(`${this.url}`)
+          .then(response => {
+            console.log(response.data);
+          })
+          .catch(e => {
+            alert(`error${e}`);
+          });
+      } else {
+        alert("No hay datos para la cita");
+      }
     },
-    addTogether(){
-      if(this.users.captionCompanion ==  ''){
-       //acciones a realizar si este dato se encuentra basio 
-      } else{
-        this.users.together.push(this.users.captionCompanion)
-        this.users.captionCompanion = ''
+    addTogether() {
+      if (this.users.captionCompanion == "") {
+        //acciones a realizar si este dato se encuentra basio
+      } else {
+        this.users.together.push(this.users.captionCompanion);
+        this.users.captionCompanion = "";
       }
     }
   }
