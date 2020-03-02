@@ -8,7 +8,7 @@
         class="typcn typcn-briefcase"
         style="margin-left: 6px;margin-top: 7px; float:left"
       ></i>
-      <span style="margin-left:1.5em">{{ name }}</span>
+      <span style="margin-left:1.5em">{{ name.nombre}}</span>
     </div>
   </div>
 </template>
@@ -20,7 +20,7 @@ export default {
   },
   computed: {
     x() {
-      if (this.name) {
+      if (this.name.nombre ) {
         return true;
       } else {
         return false;
@@ -29,7 +29,9 @@ export default {
   },
   methods: {
     selected() {
-      this.$store.commit("change", this.name);
+      this.$store.commit("change", this.name.nombre);
+      this.$store.commit("emailVisitChange", this.name.email);
+      this.$store.commit("idVisitChange", this.name.idVisit);
     }
   }
 };

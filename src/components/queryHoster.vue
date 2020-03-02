@@ -1,7 +1,7 @@
 <template>
     <div style="text-align:center;  overflow-y: scroll;" class="container">
         <!-- vista para consulta de anfitrion -->
-        <hoster v-for="i in name " :key="i" v-bind:name="i.nombre"/>
+        <hoster v-for="i in name " :key="i" v-bind:name="i"/>
     </div>    
 </template>
 <script>

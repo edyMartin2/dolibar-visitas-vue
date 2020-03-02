@@ -105,7 +105,7 @@
             </form>
           </div>
           <!-- llenado automatico de visitantes -->
-          <queryVisit v-show="logic.pageStep == 3" v-bind:name="users.visits" />
+          <queryVisit v-show="logic.pageStep == 3" v-bind:name="users.visits"/>
           <!-- llenado automatico de anfitriones -->
           <hoster v-show="logic.pageStep == 4" v-bind:name="users.visits" />
         </div>
@@ -160,7 +160,6 @@ export default {
         axios
           .get(`${this.url}/getContact.php?dato=${this.users.visit}&tabla=1`)
           .then(response => {
-            console.log(response.data);
             this.users.visits = response.data;
           })
           .catch(e => {
@@ -209,7 +208,12 @@ export default {
         if(question == true){
           let date = `${this.$store.state.visit} %26 ${this.date.day} %26 ${this.date.time} %26 ${this.users.together} %26 ${this.$store.state.hoster} %26 1 %26  %26${Date.now()} `;
           axios.get(`${this.url}/insertar.php?date=${date}`).then(response=>{
-            alert(response.data);
+            if(response.data = "listo"){
+              let datamail = 'definir datos';
+              axios.get(`${this.url}/EnvioMensajes/outlookEnvioSMTP_WebPage.php?data=${datamail}`).then().catch();
+            } else{
+
+            }
           }).catch(err=>console.log(err));
         } else{
           console.log('cita cancelada');
