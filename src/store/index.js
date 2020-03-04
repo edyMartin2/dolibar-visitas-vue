@@ -17,10 +17,10 @@ export default new Vuex.Store({
       state.visit = arg1;
     },
     emailVisitChange(state, arg){
-      state.mailVisit = arg
+      state.mailVisit = arg;
     },
     idVisitChange(state, arg){
-      state.idVisit = arg
+      state.idVisit = arg;
     },
     changeHoster(state, arg){
       state.hoster = arg;

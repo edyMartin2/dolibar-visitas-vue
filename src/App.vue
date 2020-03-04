@@ -206,14 +206,13 @@ export default {
       ) {
         let question = confirm('Agendar la cita ?')
         if(question == true){
-          let date = `${this.$store.state.visit} %26 ${this.date.day} %26 ${this.date.time} %26 ${this.users.together} %26 ${this.$store.state.hoster} %26 1 %26  %26${Date.now()} `;
-          axios.get(`${this.url}/insertar.php?date=${date}`).then(response=>{
-            if(response.data = "listo"){
-              let datamail = 'definir datos';
-              axios.get(`${this.url}/EnvioMensajes/outlookEnvioSMTP_WebPage.php?data=${datamail}`).then().catch();
-            } else{
-
-            }
+          let date = `${this.$store.state.visit};${this.date.day};${this.date.time};${this.users.together};${this.$store.state.hoster};1;NODATA;${ Math.floor(Math.random() * (9999-1000)) + 1000};${this.$store.state.idVisit}`;
+          let dataEmail = `${this.$store.state.idVisit};${this.$store.state.mailHost};${this.$store.state.mailVisit};${this.$store.state.visit}`
+          axios.get(`${this.url}/insertar.php?data=${date}`).then(response => {
+            console.log(response.data);
+            axios.get(`${this.url}/mail/outlookEnvioSMTP_WebPage.php?data=${dataEmail}`).then(response =>{
+              console.log(response.data);
+            }).catch(e => console.log(e));
           }).catch(err=>console.log(err));
         } else{
           console.log('cita cancelada');

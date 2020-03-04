@@ -1,14 +1,17 @@
 <template>
-  <div v-show="x" @click="selected">
+  <div>
     <div
       class="bg-light border rounded "
       style="width: 100%;min-width: 50px;margin: 0em;height: 2.5em;padding: 4px;margin-top: 30px;"
-    >
+      v-show="x" @click="selected" >
       <i
         class="typcn typcn-briefcase"
         style="margin-left: 6px;margin-top: 7px; float:left"
       ></i>
       <span style="margin-left:1.5em">{{ name.nombre}}</span>
+    </div>
+    <div v-show="!x"  class="bg-light border rounded " style="width: 100%;min-width: 50px;margin: 0em;height: 2.5em;padding: 4px;margin-top: 30px;">
+      <span>Nuevo usuario</span>
     </div>
   </div>
 </template>
