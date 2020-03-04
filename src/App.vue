@@ -5,7 +5,20 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/typicons/2.0.9/typicons.min.css"
     />
-    <div class="container-fluid">
+    <div class="menu">
+      <ul class="menu-list">
+        <li style="width:100%">
+        <select name="" id="">
+          <option value="" class=""></option>
+          <option value="" class="">dos</option>
+        </select>
+        </li>
+        <li>Añadir</li>
+        <li>Historial</li>
+        <li>Hoy</li>
+      </ul>
+    </div>
+    <div class="container">
       <div class="row" style="margin-top: 15px;">
         <div class="col-md-6">
           <form>
@@ -264,6 +277,15 @@ export default {
 </script>
 // este son los estilos css en vue ocupados en -queryHoster y -queryVisit
 <style scoped>
+.menu{
+  background-color: #ededed;
+  width: 12.5%;
+  height: 100vh;
+  float: left;
+}
+.menu-list{
+  list-style: none;
+}
 .container {
   width: 100%;
   height: 420px;
