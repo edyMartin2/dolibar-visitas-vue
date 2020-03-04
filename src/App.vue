@@ -28,19 +28,21 @@
               >
                 <label class="btn btn-secondary active">
                   Solo
-                  <input type="radio" name="options" checked @click="stepDefined(404)" />
+                  <input type="radio" name="options" checked @click="stepDefined(4041)" />
                 </label>
                 <label class="btn btn-secondary">
                   Acompañado
                   <input type="radio" name="options" checked @click="stepDefined(1)" />
                 </label>
               </div>
-              <i
-                class="typcn typcn-time float-right"
-                style="font-size: 2em"
+              <label
+                class="float-right btn btn-danger"
+                style="font-size: 1em; cursor:pointer; margin-top:.5em"
                 @click="stepDefined(2)"
-              ></i>
+              >{{ui.setClock}} {{ui.merid}}</label>
             </div>
+
+            
           </form>
           <label>Anfitrion : {{ this.$store.state.hoster }}</label>
           <div class="form-group">
@@ -60,7 +62,7 @@
               />
               <div class="input-group-append">
                 <button class="btn btn-primary" type="button" @click="upData">
-                  <i class="typcn typcn-tick"></i>
+                  Enviar
                 </button>
               </div>
             </div>
@@ -81,7 +83,7 @@
               </div>
             </form>
 
-            <ul>
+            <ul v-show="users.list">
               <li v-for="i in users.list" :key="i">{{i}}</li>
             </ul>
           </div>
@@ -102,6 +104,7 @@
                   <span class="glyphicon glyphicon-time"></span>
                 </span>
               </div>
+              <a class="btn btn-primary" style="float:right; color:#fff; margin-top:1em" @click="selectedClock">Seleccionar</a>
             </form>
           </div>
           <!-- llenado automatico de visitantes -->
@@ -123,7 +126,7 @@ export default {
 
   data() {
     return {
-      url: "http://localhost/controllers",
+      url: "http://insyc.southcentralus.cloudapp.azure.com/custom/visita/controllers",
       users: {
         visit: "",
         host: "",
@@ -139,7 +142,9 @@ export default {
       ui: {
         isActive: false,
         active: "active",
-        inactive: "inactive"
+        inactive: "inactive",
+        setClock: 'Edita la fecha y hora',
+        merid:''
       },
       date: {
         day: "",
@@ -169,7 +174,18 @@ export default {
     },
     stepDefined(args) {
       // 404 es para ocultar las pestañas
-      if (args) {
+      if (args == 4041) {
+       if(this.users.list != ''){
+          let question =confirm('desea borrar a los acompañantes')
+        if(question== true){
+          this.users.together = '';
+          this.users.list = [];
+          this.logic.pageStep = args;
+        } else{
+          console.log('basio')
+        }
+       }
+      } else if(args){
         this.logic.pageStep = args;
       }
     },
@@ -210,7 +226,8 @@ export default {
           let dataEmail = `${this.$store.state.idVisit};${this.$store.state.mailHost};${this.$store.state.mailVisit};${this.$store.state.visit}`
           axios.get(`${this.url}/insertar.php?data=${date}`).then(response => {
             console.log(response.data);
-            axios.get(`${this.url}/mail/outlookEnvioSMTP_WebPage.php?data=${dataEmail}`).then(response =>{
+            // http://localhost/controllers/EnvioMensajes/outlookEnvioSMTP_WebPage.php?data=35
+            axios.get(`${this.url}/EnvioMensajes/outlookEnvioSMTP_WebPage.php?data=${dataEmail}`).then(response =>{
               console.log(response.data);
             }).catch(e => console.log(e));
           }).catch(err=>console.log(err));
@@ -228,6 +245,18 @@ export default {
         this.users.together = this.users.together.concat('-'+this.users.captionCompanion);
         this.users.list.push(this.users.captionCompanion);
         this.users.captionCompanion = "";
+      }
+    },
+    selectedClock(){
+      if(this.date.day != '' && this.date.time != ''){
+        this.ui.setClock = "Fecha: "+this.date.day +" Hora: "+ this.date.time
+        if(this.date.time > '12:00'){
+          this.ui.merid = 'hrs'
+        }else{
+          this.ui.merid = 'am'
+        }
+      } else {
+        console.log("sin fecha")
       }
     }
   }

@@ -11,7 +11,7 @@
       <span style="margin-left:1.5em">{{ name.nombre}}</span>
     </div>
     <div v-show="!x"  class="bg-light border rounded " style="width: 100%;min-width: 50px;margin: 0em;height: 2.5em;padding: 4px;margin-top: 30px;">
-      <span>Nuevo usuario</span>
+      <a href="http://insyc.southcentralus.cloudapp.azure.com/societe/card.php?action=create&leftmenu=">Agregar nuevo</a>
     </div>
   </div>
 </template>
