@@ -13,8 +13,8 @@
       <span class="host" style="float:right; margin-right:1em;">{{ name.host}}</span>
       <div class="actions">
         <i class="typcn typcn-export" @click="share"></i>
-        <i class="typcn typcn-delete-outline" @click="s"></i>
-        <i class="typcn typcn-document-text" @click="s"></i>
+        <i class="typcn typcn-delete-outline" @click="dash"></i>
+        <router-link to="/citaInfo"><i class="typcn typcn-document-text" @click="info"></i></router-link>
       </div>
     </div>
   </div>
@@ -24,11 +24,12 @@ import axios from 'axios'
 export default {
   name: "citasHoy",
   props:{
-    name
+
   },
   data(){
     return {
-      visitorData:[]
+      visitorData:[],
+      hostData:[],
     }
   },
   computed:{
@@ -42,10 +43,24 @@ export default {
   },
   methods:{
     share(){
-      
-      axios.get(`${this.$store.state.url}/getContact.php?dato=${this.name.visitor}&tabla=1`).then(response => this.visitorData = response.data).catch(e=>console.log(e));
+      let datsAll = `${this.visitorData[0].idVisit};${this.hostData[0].email};${this.visitorData[0].email};${this.visitorData[0].nombre}`; 
+      axios.get(`${this.$store.state.url}/EnvioMensajes/outlookEnvioSMTP_WebPage.php?data=${datsAll}`).then(response=>console.log(response.data)).catch(e=>console.log(e));
+    },
+    dash(){
+      let dash = confirm('Quiere cancelar esta cita');
+      if (dash == true){
+        axios.get(`${this.$store.state.url}/desactive.php?data=${this.name.code}`).then(response => alert(response.data)).catch(e=>console.log(e));
+        location.reload();
+      }else{
+        console.log('intento de cancelacion');
+      }
     }
+  },
+  beforeMount(){
+    axios.get(`${this.$store.state.url}/getContact.php?dato=${this.name.visitor}&tabla=1`).then(response => this.visitorData = response.data).catch(e=>console.log(e));
+    axios.get(`${this.$store.state.url}/getContact.php?dato=${this.name.host}&tabla=2`).then(response => this.hostData = response.data).catch(e=>console.log(e));
   }
+
 };
 </script>
 <style scoped>
@@ -78,5 +93,9 @@ export default {
   font-size: 1em;
   margin-right: 1em;
   cursor: pointer;
+}
+a{
+  color: #000000;
+  margin-right: 1em;
 }
 </style>

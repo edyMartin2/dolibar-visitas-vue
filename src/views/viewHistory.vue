@@ -1,26 +1,26 @@
 <template>
   <div class="scrolling">
-    <today v-for="i in dats" :key="i" v-bind:name="i" />
+    <history v-for="i in name" :key="i" :name="i" />
   </div>
 </template>
 <script>
-import today from "../components/today";
+import history from "../components/history";
 import axios from "axios";
 export default {
-  name: "viewPending",
+  name: "viewHistory",
+  components: {
+    history
+  },
   data() {
     return {
-      dats: []
+      name
     };
-  },
-  components: {
-    today
   },
   beforeMount() {
     axios
-      .get(`${this.$store.state.url}/getDataVisitTomorrow.php`)
-      .then(response => (this.dats = response.data))
-      .catch(e => alert(e));
+      .get(`${this.$store.state.url}/getDataVisitHistory.php`)
+      .then(response => (this.name = response.data))
+      .catch(e => console.log(e));
   }
 };
 </script>
