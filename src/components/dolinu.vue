@@ -25,13 +25,13 @@
         <option value=""></option>
       </datalist>
       <br>
-      <i class="typcn typcn-home-outline  icons"> Citados hoy</i> <br>
+      <router-link to="/" style="color:#000"> <i class="typcn typcn-home-outline  icons"> Citados hoy</i> <br></router-link>
       <hr>
-      <i class="typcn typcn-pin-outline icons"> Citas pendientes</i>
+      <router-link to="/cp" style="color:#000"><i class="typcn typcn-pin-outline icons"> Citas pendientes</i></router-link>
       <hr>
-      <i class="typcn typcn-coffee icons"> Historial</i>
+      <router-link to="/history" style="color:#000"><i class="typcn typcn-coffee icons"> Historial</i></router-link>
       <hr>
-      <i class="typcn typcn-folder-add icons"> Añadir</i>
+      <router-link to="/add" style="color:#000"> <i class="typcn typcn-folder-add icons"> Añadir</i></router-link>
       <hr>
     </div>
 </template>
@@ -58,7 +58,7 @@ export default {
 .menu > span{
   cursor: pointer;
 }
-.icons{
+a{
   white-space: nowrap;
   font-family: roboto,arial,tahoma,verdana,helvetica;
   text-align: left;

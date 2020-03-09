@@ -10,7 +10,9 @@ export default new Vuex.Store({
     together:'',
     idVisit:'',
     mailVisit:'',
-    mailHost:''
+    mailHost:'',
+    // url: "http://insyc.southcentralus.cloudapp.azure.com/custom/visita/controllers"
+    url: "http://localhost/controllers",
   },
   mutations: {
     change (state,arg1){
@@ -28,7 +30,6 @@ export default new Vuex.Store({
     emailHosterChange(state,arg){
       state.mailHost = arg;
     }
-
   },
   actions: {
   },
