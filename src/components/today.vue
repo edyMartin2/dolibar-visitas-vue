@@ -14,7 +14,7 @@
       <div class="actions">
         <i class="typcn typcn-export" @click="share"></i>
         <i class="typcn typcn-delete-outline" @click="dash"></i>
-        <router-link to="/citaInfo"><i class="typcn typcn-document-text" @click="info"></i></router-link>
+        <router-link :to="send"><i class="typcn typcn-document-text" @click="info"></i></router-link>
       </div>
     </div>
   </div>
@@ -24,12 +24,13 @@ import axios from 'axios'
 export default {
   name: "citasHoy",
   props:{
-
+    name
   },
   data(){
     return {
       visitorData:[],
       hostData:[],
+      send:`citaInfo/${this.name.code}`
     }
   },
   computed:{

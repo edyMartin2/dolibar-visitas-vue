@@ -1,8 +1,7 @@
 <template>
-  <div id="app">
     <div class="container">
-      <div class="row" style="margin-top: 15px;">
-        <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-6" style="margin-top:1em">
           <form>
             <div class="form-group">
               <label>Nos visita : {{ this.$store.state.visit }}</label>
@@ -109,7 +108,6 @@
         </div>
       </div>
     </div>
-  </div>
 </template>
 // scripts de la pagina inicial
 <script>
