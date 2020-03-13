@@ -1,5 +1,50 @@
 <template>
   <div class="scrolling">
+    <div class="container" style="margin-top:1em">
+      <h3>Busqueda</h3>
+      <form>
+        <div class="row">
+          <div class="col">
+            <!-- <input type="select" class="form-control" placeholder="First name" /> -->
+            <select class="form-control" v-model="search">
+              <option value="2" disabled>Buscar por</option>
+              <option value="day">Fecha</option>
+              <option value="host">Anfitrion</option>
+              <option value="visitor">Visitante</option>
+            </select>
+          </div>
+          <div class="col">
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                aria-label="Amount (to the nearest dollar)"
+                v-show="filter"
+                v-model="findData"
+              />
+              <input
+                type="date"
+                class="form-control"
+                v-show="!filter"
+                v-model="findData"
+                required
+              />
+              <div class="input-group-append">
+                <span
+                  class="btn btn-success"
+                  style="color:#fff; cursor:pointer"
+                  @click="searchCommit"
+                  >Buscar</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <br />
+   
+    </div>
+     <hr />
     <div v-show="views" class="">
       <div id="notfound">
         <div class="notfound">
@@ -8,15 +53,9 @@
           </div>
           <h2>Citas pendientes</h2>
           <p>
-            No hay citas pendientes decea
+            No hay citas pendientes ppppp
             <router-link to="/add"> Añadir una</router-link>
           </p>
-          <!-- <div class="notfound-social">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-pinterest"></i></a>
-            <a href="#"><i class="fa fa-google-plus"></i></a>
-          </div> -->
         </div>
       </div>
     </div>
@@ -30,7 +69,8 @@ export default {
   name: "viewPending",
   data() {
     return {
-      dats: []
+      dats: [],
+      findData:''
     };
   },
   components: {

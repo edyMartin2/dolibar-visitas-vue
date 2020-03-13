@@ -1,5 +1,51 @@
 <template>
   <div class="scrolling">
+    <!-- Panel de busqueda -->
+    <div class="container" style="margin-top:1em">
+      <h3>Busqueda</h3>
+      <form>
+        <div class="row">
+          <div class="col">
+            <!-- <input type="select" class="form-control" placeholder="First name" /> -->
+            <select class="form-control" v-model="search">
+              <option value="2" disabled>Buscar por</option>
+              <option value="day">Fecha</option>
+              <option value="host">Anfitrion</option>
+              <option value="visitor">Visitante</option>
+            </select>
+          </div>
+          <div class="col">
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                aria-label="Amount (to the nearest dollar)"
+                v-show="filter"
+                v-model="dats"
+              />
+              <input
+                type="date"
+                class="form-control"
+                v-show="!filter"
+                v-model="dats"
+                required
+              />
+              <div class="input-group-append">
+                <span
+                  class="btn btn-success"
+                  style="color:#fff; cursor:pointer"
+                  @click="searchCommit"
+                  >Buscar</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <br />
+    </div>
+    <hr />
+    <!-- sona de error  -->
     <div v-show="views" class="">
       <div id="notfound">
         <div class="notfound">
@@ -8,12 +54,13 @@
           </div>
           <h2>Hay Historial</h2>
           <p>
-            Aun no ha generado citas puede 
+            Aun no ha generado citas puede
             <router-link to="/add"> generar la primera</router-link>
           </p>
         </div>
       </div>
     </div>
+    <!-- sona de vistas -->
     <history v-for="i in name" :key="i" :name="i" />
   </div>
 </template>
@@ -27,7 +74,9 @@ export default {
   },
   data() {
     return {
-      name
+      name,
+      search: "2",
+      dats: ""
     };
   },
   beforeMount() {
@@ -42,6 +91,29 @@ export default {
         return true;
       } else {
         return false;
+      }
+    },
+    filter() {
+      if (this.search == "day") {
+        return false;
+      } else {
+        return true;
+      }
+    }
+  },
+  methods: {
+    //  http://localhost/basura/htdocs/custom/visita/filters.php?data=host;edgar
+    searchCommit() {
+      if (this.search != 2) {
+        this.name = [];
+        let dat = `${this.search};${this.dats}`;
+        axios
+          .get(`${this.$store.state.url}/filters.php?data=${dat}`)
+          .then(response => (this.name = response.data))
+          .catch(e => console.log(e));
+        this.dats = '';
+      } else {
+        alert("faltan datos");
       }
     }
   }

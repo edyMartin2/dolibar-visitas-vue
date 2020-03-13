@@ -12,12 +12,6 @@
             No hay citas para el dia de hoy
             <router-link to="/add"> Agendar una cita</router-link>
           </p>
-          <!-- <div class="notfound-social">
-            <a href="#"><i class="fa fa-facebook"></i></a>
-            <a href="#"><i class="fa fa-twitter"></i></a>
-            <a href="#"><i class="fa fa-pinterest"></i></a>
-            <a href="#"><i class="fa fa-google-plus"></i></a>
-          </div> -->
         </div>
       </div>
     </div>

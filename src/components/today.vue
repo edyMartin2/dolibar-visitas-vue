@@ -1,6 +1,5 @@
 <template>
   <div class="row justify-content-center align-items-center minh-100">
-
     <div class="cita-container plus"  v-if="show == true">
       <div class="data-container align-items-center minh-100 bg-primary">
         <br />
