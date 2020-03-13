@@ -1,5 +1,25 @@
 <template>
   <div class="scrolling">
+    <div v-show="views" class="">
+      <div id="notfound">
+        <div class="notfound">
+          <div class="notfound-404">
+            <h1>0</h1>
+          </div>
+          <h2>Citas pendientes</h2>
+          <p>
+            No hay citas pendientes decea
+            <router-link to="/add"> Añadir una</router-link>
+          </p>
+          <!-- <div class="notfound-social">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-pinterest"></i></a>
+            <a href="#"><i class="fa fa-google-plus"></i></a>
+          </div> -->
+        </div>
+      </div>
+    </div>
     <today v-for="i in dats" :key="i" v-bind:name="i" />
   </div>
 </template>
@@ -21,6 +41,15 @@ export default {
       .get(`${this.$store.state.url}/getDataVisitTomorrow.php`)
       .then(response => (this.dats = response.data))
       .catch(e => alert(e));
+  },
+  computed: {
+    views() {
+      if (Object.keys(this.dats).length === 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 };
 </script>

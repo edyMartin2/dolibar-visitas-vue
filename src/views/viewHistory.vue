@@ -1,5 +1,19 @@
 <template>
   <div class="scrolling">
+    <div v-show="views" class="">
+      <div id="notfound">
+        <div class="notfound">
+          <div class="notfound-404">
+            <h1>No</h1>
+          </div>
+          <h2>Hay Historial</h2>
+          <p>
+            Aun no ha generado citas puede 
+            <router-link to="/add"> generar la primera</router-link>
+          </p>
+        </div>
+      </div>
+    </div>
     <history v-for="i in name" :key="i" :name="i" />
   </div>
 </template>
@@ -21,6 +35,15 @@ export default {
       .get(`${this.$store.state.url}/getDataVisitHistory.php`)
       .then(response => (this.name = response.data))
       .catch(e => console.log(e));
+  },
+  computed: {
+    views() {
+      if (Object.keys(this.name).length === 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 };
 </script>

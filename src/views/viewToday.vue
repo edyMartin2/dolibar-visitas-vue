@@ -1,6 +1,26 @@
 <template>
   <div>
     <div class="scrolling" style="">
+      <div v-show="views" class="">
+      <div id="notfound">
+        <div class="notfound">
+          <div class="notfound-404">
+            <h1>0</h1>
+          </div>
+          <h2>Citas Hoy</h2>
+          <p>
+            No hay citas para el dia de hoy
+            <router-link to="/add"> Agendar una cita</router-link>
+          </p>
+          <!-- <div class="notfound-social">
+            <a href="#"><i class="fa fa-facebook"></i></a>
+            <a href="#"><i class="fa fa-twitter"></i></a>
+            <a href="#"><i class="fa fa-pinterest"></i></a>
+            <a href="#"><i class="fa fa-google-plus"></i></a>
+          </div> -->
+        </div>
+      </div>
+    </div>
       <today v-for="i in dats" :key="i" v-bind:name="i" />
     </div>
   </div>
@@ -30,6 +50,15 @@ export default {
       .catch(e => {
         alert(e);
       });
+  },
+  computed: {
+    views() {
+      if (Object.keys(this.dats).length === 0) {
+        return true;
+      } else {
+        return false;
+      }
+    }
   }
 };
 </script>

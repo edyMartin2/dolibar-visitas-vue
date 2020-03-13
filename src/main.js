@@ -6,7 +6,7 @@ import 'typicons.font/src/font/typicons.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import store from './store'
 import router from './router'
-
+import './assets/css/style.css'
 
 Vue.config.productionTip = false
 

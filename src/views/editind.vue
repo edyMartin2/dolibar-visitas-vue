@@ -48,16 +48,16 @@
       <div class="col-lg-6">
         <form>
           <div class="form-group">
-            <label class="form-text text-muted">Comentarios</label>
+            <label class="form-text text-muted">Añadir comentarios</label>
             <textarea class="form-control" v-model="extend.comments"></textarea>
           </div>
           <div align="center">
-            <h1 style="color:#28a745">{{ extend.code }}</h1>
+            <h1 style="color:#ff0000">{{ extend.code }}</h1>
           </div>
         </form>
 
         <div align="center">
-          <router-link to="/" class="btn btn-success" style="color:#fff">Atras</router-link>
+          <button class="btn btn-danger" @click="update">Guardar</button>
         </div>
       </div>
     </div>
@@ -77,6 +77,29 @@ export default {
       .get(`${this.$store.state.url}/checked.php?code=${this.dat}`)
       .then(response => (this.extend = response.data))
       .catch(e => console.log(e));
+  },
+  methods: {
+    update() {
+      let question = confirm("Esta seguro de actualizar los datos");
+      if (question == true) {
+        //UPDATE datavisit SET visitor='".$data[0]."', day='".$data[1]."', time='".$data[2]."', together ='".$data[3]."', host ='".$data[4]."', comments='".$data[5]."', WHERE code ='".$data[6]."'";
+        let data = `${this.extend.visitor};${this.extend.day};${this.extend.time};${this.extend.together};${this.extend.host};${this.extend.comments};${this.extend.code}`;
+        axios
+          .get(`${this.$store.state.url}/update.php?data=${data}`)
+          .then(response => console.log(response.data))
+          .catch(e => console.log(e));
+        // 72;evaleirio.sdc@hotmail.con;edgar.edgarroman@gmail.com;edgar
+        let datosEmain = `${this.extend.idVisit};${this.$store.state.mailHost};${this.$store.state.mailVisit};${this.extend.visitor}`;
+        axios
+          .get(
+            `${this.$store.state.url}/EnvioMensajes/outlookEnvioSMTP_WebPage.php?data=${datosEmain}`
+          )
+          .then(response => console.log(response))
+          .catch(e => console.log(e));
+      } else {
+        console.log("intento de actualizacion");
+      }
+    }
   }
 };
 </script>

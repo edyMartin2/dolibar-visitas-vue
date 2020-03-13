@@ -11,7 +11,7 @@
       <marquee behavior="" direction="left" width="40%" scrollamount="3" class=" d-lg-none d-xl-none">{{name.code }} {{ name.visitor}}</marquee>
       <span class="host" style="float:right; margin-right:1em;">{{ name.host}}</span>
       <div class="actions">
-        <router-link :to="send"><i class="typcn typcn-document-text"></i></router-link>
+        <router-link :to="send" title="Mas informacion"><i class="typcn typcn-info-large"></i></router-link>
       </div>
 
     </div>

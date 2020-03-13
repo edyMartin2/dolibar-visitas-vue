@@ -25,13 +25,13 @@
         <option value=""></option>
       </datalist>
       <br>
-      <router-link to="/" style="color:#000"> <i class="typcn typcn-home-outline  icons"> Citados hoy</i> <br></router-link>
+      <router-link to="/" style="color:#000"> Citados hoy <br></router-link>
       <hr>
-      <router-link to="/cp" style="color:#000"><i class="typcn typcn-pin-outline icons"> Citas pendientes</i></router-link>
+      <router-link to="/cp" style="color:#000"> Citas pendientes</router-link>
       <hr>
-      <router-link to="/history" style="color:#000"><i class="typcn typcn-coffee icons"> Historial</i></router-link>
+      <router-link to="/history" style="color:#000"> Historial</router-link>
       <hr>
-      <router-link to="/add" style="color:#000"> <i class="typcn typcn-folder-add icons"> Añadir</i></router-link>
+      <router-link to="/add" style="color:#000"> Añadir</router-link>
       <hr>
     </div>
 </template>
@@ -42,8 +42,9 @@ export default {
 </script>
 <style  scoped>
 .menu {
-  background-color: #ededed;
-  width: 15em;
+  background-color:#fafafa;
+  border-right: 1px solid #d0d0d0;
+  width: 209px;
   height: 100vh;
   float: left;
   margin: 0;
@@ -60,10 +61,7 @@ export default {
 }
 a{
   white-space: nowrap;
-  font-family: roboto,arial,tahoma,verdana,helvetica;
-  text-align: left;
-  font-weight: bold;
+  font-family:arial,tahoma,verdana,helvetica;
   cursor:pointer;
-  font-size: 1.1em;
 }
 </style>

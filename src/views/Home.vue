@@ -1,7 +1,8 @@
 <template>
     <div class="container">
+      <br>
       <div class="row">
-        <div class="col-md-6" style="margin-top:1em">
+        <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 col-xl-6">
           <form>
             <div class="form-group">
               <label>Nos visita : {{ this.$store.state.visit }}</label>
@@ -64,7 +65,7 @@
         </div>
         <!-- ********************************************************************divicion************ -->
         <!-- *******************************secciones invisibles de lado derecho************************************* -->
-        <div class="col-lg-6">
+        <div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 col-xl-6">
           <div id="visit" v-show="logic.pageStep == 1">
             <form style="margin-top:2em;">
               <div class="input-group">
@@ -213,11 +214,11 @@ export default {
       ) {
         let question = confirm('Agendar la cita ?')
         if(question == true){
-          let date = `${this.$store.state.visit};${this.date.day};${this.date.time};${this.users.together};${this.$store.state.hoster};1;NODATA;${ Math.floor(Math.random() * (9999-1000)) + 1000};${this.$store.state.idVisit}`;
+          let date = `${this.$store.state.visit};${this.date.day};${this.date.time};${this.users.together};${this.$store.state.hoster};1; ;${ Math.floor(Math.random() * (9999-1000)) + 1000};${this.$store.state.idVisit}`;
           let dataEmail = `${this.$store.state.idVisit};${this.$store.state.mailHost};${this.$store.state.mailVisit};${this.$store.state.visit}`
           axios.get(`${this.$store.state.url}/insertar.php?data=${date}`).then(response => {
             console.log(response.data);
-            // http://localhost/controllers/EnvioMensajes/outlookEnvioSMTP_WebPage.php?data=35
+            //http://localhost/controllers/EnvioMensajes/outlookEnvioSMTP_WebPage.php?data=35
             axios.get(`${this.$store.state.url}/EnvioMensajes/outlookEnvioSMTP_WebPage.php?data=${dataEmail}`).then(response =>{
               console.log(response.data);
             }).catch(e => console.log(e));

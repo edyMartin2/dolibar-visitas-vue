@@ -1,7 +1,9 @@
 <template>
   <div id="app">
-    <dolinu class="d-none d-sm-none d-md-none d-lg-inline d-xl-inline"/>
-    <router-view/>
+    <dolinu class="d-none d-sm-none d-md-inline d-lg-inline d-xl-inline"/>
+    <div>
+       <router-view/>
+    </div>
   </div>
 </template>
 <script>

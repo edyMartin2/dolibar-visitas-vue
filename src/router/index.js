@@ -5,6 +5,7 @@ import viewToday from '../views/viewToday.vue'
 import viewPending from '../views/viewPending.vue'
 import viewHistory from '../views/viewHistory.vue'
 import viewInfo from '../views/info.vue'
+import editnd from '../views/editind.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -37,7 +38,13 @@ const routes = [
     path:'/citaInfo/:dat',
     name:'citaInfo',
     component:viewInfo
-  } 
+  },
+  // edit
+  {
+    path:'/editCita/:dat',
+    name:'editCita',
+    component:editnd
+  }
 ]
 
 const router = new VueRouter({

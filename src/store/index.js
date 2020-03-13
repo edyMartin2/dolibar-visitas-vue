@@ -12,7 +12,7 @@ export default new Vuex.Store({
     mailVisit:'',
     mailHost:'',
     // url: "http://insyc.southcentralus.cloudapp.azure.com/custom/visita/controllers"
-    url: "http://localhost/controllers",
+    url: "http://localhost/basura/htdocs/custom/visita/",
   },
   mutations: {
     change (state,arg1){

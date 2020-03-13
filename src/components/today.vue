@@ -1,6 +1,7 @@
 <template>
-  <div class="row justify-content-center align-items-center minh-100" v-show="show">
-    <div class="cita-container plus">
+  <div class="row justify-content-center align-items-center minh-100">
+
+    <div class="cita-container plus"  v-if="show == true">
       <div class="data-container align-items-center minh-100 bg-primary">
         <br />
         {{name.day}}
@@ -12,9 +13,10 @@
       <marquee behavior="" direction="left" width="40%" scrollamount="3" class=" d-lg-none d-xl-none">{{name.code }} {{ name.visitor}}</marquee>
       <span class="host" style="float:right; margin-right:1em;">{{ name.host}}</span>
       <div class="actions">
-        <i class="typcn typcn-export" @click="share"></i>
-        <i class="typcn typcn-delete-outline" @click="dash"></i>
-        <router-link :to="send"><i class="typcn typcn-document-text" @click="info"></i></router-link>
+        <i class="typcn typcn-export" @click="share" title="Reenviar Correo"></i>
+        <i class="typcn typcn-delete-outline" @click="dash" title="Borrar"></i>
+        <router-link :to="send"><i  @click="info" class="typcn typcn-info-large" title="Mas informacion"></i></router-link>
+        <router-link :to="edit"><i @click="info" class="typcn typcn-pencil" title="Editar cita"></i></router-link>
       </div>
     </div>
   </div>
@@ -30,7 +32,8 @@ export default {
     return {
       visitorData:[],
       hostData:[],
-      send:`citaInfo/${this.name.code}`
+      send:`citaInfo/${this.name.code}`,
+      edit:`editCita/${this.name.code}`
     }
   },
   computed:{
@@ -50,11 +53,16 @@ export default {
     dash(){
       let dash = confirm('Quiere cancelar esta cita');
       if (dash == true){
-        axios.get(`${this.$store.state.url}/desactive.php?data=${this.name.code}`).then(response => alert(response.data)).catch(e=>console.log(e));
+        axios.get(`${this.$store.state.url}/desactive.php?data=${this.name.code}`).then(response => console.log(response.data)).catch(e=>console.log(e));
         location.reload();
       }else{
         console.log('intento de cancelacion');
       }
+    },
+    info(){
+      this.$store.commit("emailVisitChange", this.visitorData[0].email);
+      this.$store.commit('emailHosterChange', this.hostData[0].email)
+      // alert(this.visitorData[0].email)
     }
   },
   beforeMount(){
