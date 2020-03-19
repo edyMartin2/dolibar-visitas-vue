@@ -53,23 +53,26 @@
           </div>
           <h2>Citas pendientes</h2>
           <p>
-            No hay citas pendientes ppppp
+            No hay citas pendientes
             <router-link to="/add"> Añadir una</router-link>
           </p>
         </div>
       </div>
     </div>
     <today v-for="i in dats" :key="i" v-bind:name="i" />
+    
   </div>
 </template>
 <script>
 import today from "../components/today";
 import axios from "axios";
+
 export default {
   name: "viewPending",
   data() {
     return {
       dats: [],
+      search:'2',
       findData:''
     };
   },
@@ -89,9 +92,38 @@ export default {
       } else {
         return false;
       }
+    },
+    filter() {
+      if (this.search == "day") {
+        return false;
+      } else {
+        return true;
+      }
+    },
+    loading(){
+      return false
+    }
+  },
+  methods: {
+    //  http://localhost/basura/htdocs/custom/visita/filters.php?data=host;edgar
+    searchCommit() {
+      if (this.search != 2) {
+        this.name = [];
+        let dat = `${this.search};${this.dats};2`;
+        axios
+          .get(`${this.$store.state.url}/filters.php?data=${dat}`)
+          .then(response => (this.name = response.data))
+          .catch(e => console.log(e));
+        this.dats = '';
+      } else {
+        alert("faltan datos");
+      }
+    },
+    oa(){
+      alert('hola');
     }
   }
-};
+  };
 </script>
 <style>
 * {

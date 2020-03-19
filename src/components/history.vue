@@ -1,18 +1,14 @@
 <template>
   <div class="row justify-content-center align-items-center minh-100" v-show="show">
     <div class="cita-container plus">
-      <div class="data-container align-items-center minh-100 bg-primary">
-        <br />
+      <div class="data-container  bg-primary">
         {{name.day}}
         <br/>
       </div>
-      <br />
-      <span class="d-none d-sm-none d-md-none d-lg-inline d-xl-inline" style="margin-left: 1em"><span style="color:red;">{{name.code }}</span> {{ name.visitor}}</span>
-      <marquee behavior="" direction="left" width="40%" scrollamount="3" class=" d-lg-none d-xl-none">{{name.code }} {{ name.visitor}}</marquee>
-      <span class="host" style="float:right; margin-right:1em;">{{ name.host}}</span>
-      <div class="actions">
-        <router-link :to="send" title="Mas informacion"><i class="typcn typcn-info-large"></i></router-link>
-      </div>
+      <span class="d-none d-sm-none d-md-none d-lg-inline d-xl-inline" style="margin-left: 1em"><span style="color:red;"></span> {{ name.visitor}}</span>
+      <marquee behavior="" direction="left" width="40%" scrollamount="3" class=" d-lg-none d-xl-none"> {{ name.visitor}}</marquee>
+      <span class="host" style="float:right; margin-right:1em;"><router-link :to="send" title="Mas informacion"><i class="typcn typcn-info-large"></i></router-link></span>
+
 
     </div>
   </div>
@@ -43,16 +39,16 @@ export default {
 <style scoped>
 .cita-container {
   width: 70%;
-  height: auto;
+  height: 2em;
   border-radius: 1em;
-  margin-top: 1em;
+  margin-top: .5em;
   border-radius: 1em;
   border: 1px solid #d8d8d8;
 }
 .data-container {
   float: left;
   width: 7em;
-  height: 4.9em;
+  height: 2em;
   text-align: center;
   color: #fff;
   border-radius: 1em 0px 0px 1em;

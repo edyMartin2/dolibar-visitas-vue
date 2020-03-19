@@ -11,8 +11,8 @@ export default new Vuex.Store({
     idVisit:'',
     mailVisit:'',
     mailHost:'',
-    // url: "http://insyc.southcentralus.cloudapp.azure.com/custom/visita/controllers"
-    url: "http://localhost/basura/htdocs/custom/visita/",
+    url: "http://insyc.southcentralus.cloudapp.azure.com/custom/visita/"
+    //url: "http://localhost/basura/htdocs/custom/visitas/",
   },
   mutations: {
     change (state,arg1){

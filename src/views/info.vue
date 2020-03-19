@@ -17,7 +17,7 @@
             />
           </div>
           <div class="form-group">
-            <label for="host" class="form-text text-muted">Lo resive</label>
+            <label for="host" class="form-text text-muted">Lo recibe</label>
             <input
               type="text"
               name="host"

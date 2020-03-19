@@ -2,21 +2,17 @@
   <div class="row justify-content-center align-items-center minh-100">
     <div class="cita-container plus"  v-if="show == true">
       <div class="data-container align-items-center minh-100 bg-primary">
-        <br />
         {{name.day}}
         <br/>
         <!-- {{name.time}} -->
       </div>
-      <br />
-      <span class="d-none d-sm-none d-md-none d-lg-inline d-xl-inline" style="margin-left: 1em"><span style="color:red;">{{name.code }}</span> {{ name.visitor}}</span>
-      <marquee behavior="" direction="left" width="40%" scrollamount="3" class=" d-lg-none d-xl-none">{{name.code }} {{ name.visitor}}</marquee>
-      <span class="host" style="float:right; margin-right:1em;">{{ name.host}}</span>
-      <div class="actions">
+      <span class="d-none d-sm-none d-md-none d-lg-inline d-xl-inline" style="margin-left: 1em"><span style="color:red;"></span> {{ name.visitor}}</span>
+      <marquee behavior="" direction="left" width="40%" scrollamount="3" class=" d-lg-none d-xl-none">{{ name.visitor}}</marquee>
+      <span class="actions"> 
         <i class="typcn typcn-export" @click="share" title="Reenviar Correo"></i>
         <i class="typcn typcn-delete-outline" @click="dash" title="Borrar"></i>
         <router-link :to="send"><i  @click="info" class="typcn typcn-info-large" title="Mas informacion"></i></router-link>
-        <router-link :to="edit"><i @click="info" class="typcn typcn-pencil" title="Editar cita"></i></router-link>
-      </div>
+        <router-link :to="edit"><i @click="info" class="typcn typcn-pencil" title="Editar cita"></i></router-link></span>
     </div>
   </div>
 </template>
@@ -74,7 +70,7 @@ export default {
 <style scoped>
 .cita-container {
   width: 70%;
-  height: 5em;
+  height: 2em;
   border-radius: 1em;
   margin-top: 1em;
   border-radius: 1em;
@@ -83,7 +79,7 @@ export default {
 .data-container {
   float: left;
   width: 7em;
-  height: 4.9em;
+  height: 2em;
   text-align: center;
   color: #fff;
   border-radius: 1em 0px 0px 1em;
@@ -95,6 +91,7 @@ export default {
   padding-left: 1em;
 }
 .actions{
+  float:right;
   text-align: right;
   }
 .actions > i{

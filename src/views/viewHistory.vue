@@ -106,7 +106,7 @@ export default {
     searchCommit() {
       if (this.search != 2) {
         this.name = [];
-        let dat = `${this.search};${this.dats}`;
+        let dat = `${this.search};${this.dats};1`;
         axios
           .get(`${this.$store.state.url}/filters.php?data=${dat}`)
           .then(response => (this.name = response.data))

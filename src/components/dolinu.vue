@@ -25,14 +25,15 @@
         <option value=""></option>
       </datalist>
       <br>
+      <router-link to="/add" style="color:#000"> Añadir cita</router-link>
+      <hr>
       <router-link to="/" style="color:#000"> Citados hoy <br></router-link>
       <hr>
       <router-link to="/cp" style="color:#000"> Citas pendientes</router-link>
       <hr>
       <router-link to="/history" style="color:#000"> Historial</router-link>
       <hr>
-      <router-link to="/add" style="color:#000"> Añadir</router-link>
-      <hr>
+      
     </div>
 </template>
 <script>
