@@ -2,8 +2,11 @@
 	<div class="container">
 		<br />
 		<div class="row">
+			<!--********************* Esta seccion es la que controla las visitas *************************-->
 			<div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 col-xl-6">
+				<!--********************* formulario de registro de vicitas *************************-->
 				<form>
+					<!--********************* parte del visitante *************************-->
 					<div class="form-group">
 						<label>Nos visita : {{ this.$store.state.visit }}</label>
 						<input
@@ -16,6 +19,8 @@
 						/>
 					</div>
 					<div class="form-group">
+						<!--********************* toggle solo o acompañado  *************************-->
+						<!--********************* realiza accion desplegable *************************-->
 						<div
 							class="btn-group btn-group-toggle"
 							data-toggle="buttons"
@@ -48,6 +53,7 @@
 						>
 					</div>
 				</form>
+				<!--********************* parte del host *************************-->
 				<label>Anfitrion : {{ this.$store.state.hoster }}</label>
 				<div class="form-group">
 					<div class="input-group">
@@ -64,16 +70,14 @@
 							@blur="clear('hoster')"
 							v-bind:placeholder="this.$store.state.hoster"
 						/>
-						<div class="input-group-append">
-							<button class="btn btn-primary" type="button" @click="upData">
-								Enviar
-							</button>
-						</div>
 					</div>
+					<br>
+					<button class="btn btn-primary float-right" type="button" @click="upData">
+						Enviar
+					</button>
 				</div>
 			</div>
-			<!-- ********************************************************************divicion************ -->
-			<!-- *******************************secciones invisibles de lado derecho************************************* -->
+			<!--********************* Esta seccion es la que esta oculta de lado derecho *************************-->
 			<div class="col-xs-12 col-sm-12 col-md-12  col-lg-12 col-xl-6">
 				<div id="visit" v-show="logic.pageStep == 1">
 					<form style="margin-top:2em;">
@@ -135,18 +139,33 @@
 				<hoster v-show="logic.pageStep == 4" v-bind:name="users.visits" />
 			</div>
 		</div>
+		<DatePicker/>
 	</div>
 </template>
 // scripts de la pagina inicial
 <script>
+//-------------------- Antes de declarar componentes y usarlos estos son declarados --------------------
 import queryVisit from "../components/queryVisit";
 import hoster from "../components/queryHoster";
+
+//-------------------- axios => ajax --------------------
 import axios from "axios";
+
+//-------------------->importamos el componente<-----------------------
+import { DatePicker } from 'ant-design-vue';
+
+
+//-------------------- aqui empezamos a interactuar con el dom de vue --------------------
 export default {
+	//--------------------el nombre de nuestro componente--------------------
+	//--------------------App--------------------
 	name: "App",
 	data() {
 		return {
+			//-------------------- Cada variable esta dentro de un grupo similar --------------------
+			//--------------------               en funciones                    --------------------
 			users: {
+				//-------------------- Variables relacionadas a inputs de visita --------------------
 				visit: "",
 				host: "",
 				visits: {},
@@ -155,9 +174,11 @@ export default {
 				list: [],
 			},
 			logic: {
+				//-------------------- la logica de ocultar los componentes --------------------
 				pageStep: 0,
 			},
 			ui: {
+				//-------------------- variables relacionadas a la user interface --------------------
 				isActive: false,
 				active: "active",
 				inactive: "inactive",
@@ -165,16 +186,21 @@ export default {
 				merid: "",
 			},
 			date: {
+				//--------------------variables relacionadas con tiempo y fecha --------------------
 				day: "",
 				time: "",
 			},
 		};
 	},
 	components: {
+		//-------------------- aqui declaramos todos los componentes foraneos --------------------
+		//-------------------- para poder ser usaos como etiquetas html --------------------
 		queryVisit,
 		hoster,
+		DatePicker
 	},
 	methods: {
+		//-------------------- Metodo que busca al visitante en nuestra base de datos --------------------
 		search() {
 			this.logic.pageStep = 3;
 			if (this.users.visit == "") {
@@ -192,8 +218,13 @@ export default {
 					});
 			}
 		},
+		//-------------------- Metodo que define que componente sera visible--------------------
 		stepDefined(args) {
-			// 404 es para ocultar las pestañas
+			//-------------------- 404 es para ocultar el componente seleecionado  --------------------
+			/* --------------------
+				se resibe un parametro args que hace referencia a el numero que se le asignara a la variable (logic.pageStep)
+				la cual esta ligada a un v-show para ver que pagina mostrar
+			-------------------- */
 			if (args == 4041) {
 				if (this.users.list != "") {
 					let question = confirm("desea borrar a los acompañantes");
@@ -209,11 +240,17 @@ export default {
 				this.logic.pageStep = args;
 			}
 		},
+		//-------------------- Metodo que busca el host en la db --------------------
 		seachHost() {
+			/* --------------------
+			iniciamos el metodo inicializando la variable logic.pageStep en 4 
+			para mostrar el apartado de busqueda
+			-------------------- */
 			this.logic.pageStep = 4;
 			if (this.users.host == "") {
 				this.logic.pageStep = 0;
 			} else {
+				//--------------------Se inicia una peticion axios la cual llenara de datos a users.visit--------------------
 				axios
 					.get(
 						`${this.$store.state.url}/getContact.php?dato=${this.users.host}&tabla=2`
@@ -226,17 +263,25 @@ export default {
 					});
 			}
 		},
+		//--------------------Este metodo limpiaria la pantalla--------------------
+		//--------------------pero nos falta mejorar el rendimiento--------------------
 		clear(context) {
-			// mejorar rendimiento
 			if (context == "visit") {
 				this.users.visit = "";
 			} else if (context == "hoster") {
 				this.users.host = "";
 			}
 		},
+
+		//--------------------Metodo encargado de registrar la visita--------------------
 		upData() {
+			/* --------------------
+			iniciamos el metodo inicializando la variable logic.pageStep en 0 
+			para ocultar la parte derecha
+			-------------------- */
 			this.logic.pageStep = 0;
-			// upload cita
+
+			//--------------------Hacemos una comprovacion de datos no vacios--------------------
 			if (
 				this.$store.state.visit != "" &&
 				this.$store.state.host != "" &&

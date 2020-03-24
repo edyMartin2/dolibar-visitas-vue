@@ -6,7 +6,7 @@
       />
       <input
         list="items"
-        style="width:100%; background:rgba(255,255,255,0); border-style:none; margin-bottom:1em"
+        style="width:100%; background:rgba(255,255,255,0); border-style:none; margin-bottom:1em; margin-left:1em"
         placeholder="Buscar"
       />
       <datalist id="items">
@@ -16,8 +16,9 @@
       </datalist>
       <input
         list="mark"
-        style="width:100%; background:rgba(255,255,255,0); border-style:none; margin-bottom:1em"
+        style="width:100%; background:rgba(255,255,255,0); border-style:none; margin-bottom:1em; margin-left:1em"
         placeholder="Marcadores"
+
       />
       <datalist>
         <option value=""></option>
@@ -64,5 +65,6 @@ a{
   white-space: nowrap;
   font-family:arial,tahoma,verdana,helvetica;
   cursor:pointer;
+  margin-left:2em;
 }
 </style>
